@@ -1,0 +1,4 @@
+flask
+logging
+json
+Flask-WTF

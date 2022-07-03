@@ -1,0 +1,92 @@
+<html>
+    <header>
+    
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+                integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+        <title>Flask Search Application</title></header>
+<body>
+    <center>
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> Search</legend>
+            <div class="form-group">
+                {{ form.searchName.label(class="form-control-label") }}
+                {% if form.searchName.errors %}
+                {{ form.searchName(class="form-control form-control-lg is-invalid") }}
+                <div class='invalid-feedback'>
+                    {% for error in form.searchName.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.searchName(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.caseSensitive.label(class="form-control-label") }}
+                {% if form.caseSensitive.errors %}
+                {{ form.caseSensitive(class="form-control form-control-lg is-invalid") }}
+                <div class='invalid-feedback'>
+                    {% for error in form.caseSensitive.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.caseSensitive(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.matchWholeWord.label(class="form-control-label") }}
+                {% if form.matchWholeWord.errors %}
+                {{ form.matchWholeWord(class="form-control form-control-lg is-invalid") }}
+                <div class='invalid-feedback'>
+                    {% for error in form.matchWholeWord.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.matchWholeWord(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btm btm-outline-info") }}
+        </div>
+    </form>
+</div>
+</center>
+<center>
+<div>
+    {% if returnPayload %}
+        {% if returnPayload['Payload'] %}
+            {% for file in returnPayload['Payload'].keys() %}
+                <h3>FileName : {{file}}<br></h3>
+                
+                {% for item in returnPayload['Payload'][file] %}
+
+                    {% for key,value in item.items() %}
+                        <h4><td>{{ key }}</td> :
+                        <td>{{ value }}</td></h4>
+                    {% endfor%}
+                {% else %}
+                    {{ "No search data found in this file!!!" }}
+                {% endfor %}
+                <br>
+            {% endfor %}
+        {% else %}
+            {{"No data found"}}
+        {% endif%}
+    {% endif %}
+
+
+</div>
+</center>
+</body>
+</html>
